@@ -75,4 +75,25 @@ common_transformations <- list(
     function(df) dplyr::mutate(df, codauto = stringr::str_trim(codauto))
 )
 
+# Function to process files ------------------------------
+process_file <- function(file_ext, name, extra_transformations) {
+    # Download data 
+    data <- fetch_data(
+        file_ext = file_ext, 
+        name = name)
+
+    # Clean data 
+    cleaned_data <- clean_data(
+        data, 
+        name = name, 
+        extra_transformations = extra_transformations)
+
+    # Save data 
+    save_data(
+        cleaned_data, 
+        name = name)
+}
+
+
+# Remove pk objects
 rm(pks, pk)

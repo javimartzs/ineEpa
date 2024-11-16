@@ -55,7 +55,7 @@ files <- list(
 
             # Rename variables
             function(df) dplyr::rename(df, 
-                nivel_formativo = Nivel.de.formación.alcanzado, 
+                nivel_formacion = Nivel.de.formación.alcanzado, 
                 sexo = Sexo
             ), 
 
@@ -63,7 +63,69 @@ files <- list(
             function(df) {
                 df |> 
                     dplyr::group_by(codauto, trimestre, sexo) |> 
-                    dplyr::mutate(pct_by_ccaa = value / value[nivel_formativp == "Total"])
+                    dplyr::mutate(pct_by_ccaa = value / value[nivel_formacion == "Total"]) |> 
+                    dplyr::ungroup()
+            }
+        )
+    ), 
+    # Activos por sexo, edad y comunidad autonoma 
+    list(
+        file_ext = "65293", 
+        name = "activos_edad_sexo", 
+        extra_transformations = list(
+
+            # Rename variables
+            function(df) dplyr::rename(df, 
+                edad = Edad, 
+                sexo = Sexo
+            ), 
+
+            # Calculate percentage by ccaa
+            function(df) {
+                df |> 
+                    dplyr::group_by(codauto, trimestre, sexo) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[edad == "Total"]) |> 
+                    dplyr::ungroup()
+            }
+        )
+    ), 
+    # Activos por formacion, sexo y comunidad autonoma 
+    list(
+        file_ext = "65297", 
+        name = "activos_formacion_sexo", 
+        extra_transformations = list(
+
+            # Rename variables 
+            function(df) dplyr::rename(df, 
+                nivel_formacion = Nivel.de.formación.alcanzado, 
+                sexo = Sexo    
+            ), 
+
+            # Calculate percentage by ccaa
+            function(df) {
+                df |> 
+                    dplyr::group_by(codauto, trimestre, sexo) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[nivel_formacion == "Total"]) |> 
+                    dplyr::ungroup()
+            }
+        )
+    ), 
+    # Activos por nacionalidad, sexo y comunidad autonoma
+    list(
+        file_ext = "65299", 
+        name = "activos_nacionalidad_sexo", 
+        extra_transformations = list(
+            # Rename variable
+            function(df) dplyr::rename(df, 
+                nacionalidad = Nacionalidad, 
+                sexo = Sexo
+            ), 
+
+            # Calculate percentage by ccaa
+            function(df) {
+                df |> 
+                    dplyr::group_by(codauto, trimestre, sexo) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[nacionalidad == "Total"]) |> 
                     dplyr::ungroup()
             }
         )

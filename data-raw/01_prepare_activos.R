@@ -4,7 +4,6 @@ source("data-raw/00_utils_data_raw.R")
 
 # File list to proccess --------------------------------
 files <- list(
-
     # Población por edad, sexo y comunidad autonoma
     list(
         file_ext = "65285", 
@@ -72,31 +71,13 @@ files <- list(
 )
 
 
-# Function to process file ------------------------------
-process_file <- function(file_ext, name, extra_transformations) {
-    # Download data 
-    data <- fetch_data(
-        file_ext = file_ext, 
-        name = name)
-
-    # Clean data 
-    cleaned_data <- clean_data(
-        data, 
-        name = name, 
-        extra_transformations = extra_transformations)
-
-    # Save data 
-    save_data(
-        cleaned_data, 
-        name = name)
-}
-
-
 # Execute function ---------------------------------------
 for (file in files) {
-    process_file(file$file_ext, file$name, file$extra_transformations)
+    process_file(
+        file$file_ext, 
+        file$name, 
+        file$extra_transformations)
 }
 
-
-
+# Remove all objects from Global Environment -------------
 rm(list = ls())

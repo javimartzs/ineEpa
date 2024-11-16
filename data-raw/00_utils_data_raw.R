@@ -1,5 +1,5 @@
 
-# Install packages if they are not installed ---------- 
+# Install packages if they are not installed -----------
 pks <- c("glue", "dplyr", "tidyr", "stringr")
 for (pk in pks) {
     if (!requireNamespace(pk, quietly = TRUE)) {

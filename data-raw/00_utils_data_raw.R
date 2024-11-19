@@ -72,7 +72,29 @@ common_transformations <- list(
     function(df) tidyr::separate(df, Comunidades.y.Ciudades.Autónomas, into = c("codauto", "ccaa"), sep = 3),
     function(df) dplyr::mutate(df, codauto = ifelse(stringr::str_detect(codauto, "Tot"), "00", codauto)), 
     function(df) dplyr::mutate(df, ccaa = ifelse(codauto == "00", "Total Nacional", ccaa)), 
-    function(df) dplyr::mutate(df, codauto = stringr::str_trim(codauto))
+    function(df) dplyr::mutate(df, codauto = stringr::str_trim(codauto)),
+
+    # Rename variables 
+    function(df) {
+        renames <- list(
+            Edad = "edad", 
+            Sexo = "sexo", 
+            Nacionalidad = "nacionalidad", 
+            `Nivel.de.formación.alcanzado` = "nivel_formacion", 
+            `Sector.económico` = "sector_economico", 
+            `Rama.de.actividad.CNAE.2009` = "rama_actividad", 
+            `Ocupación.CNO.11` = "ocupacion", 
+            `Situación.profesional` = "situacion_profesional", 
+            `Tipo.de.jornada` = "jornada", 
+            `Tipo.de.sector` = "propiedad_sector"
+        )
+        for (col in names(renames)) {
+            if (col %in% names(df)) {
+                df <- dplyr::rename(df, !!renames[[col]] := !!col)
+            }
+        }
+        return(df)
+    }
 )
 
 # Function to process files ------------------------------
@@ -95,5 +117,5 @@ process_file <- function(file_ext, name, extra_transformations) {
 }
 
 
-# Remove pk objects
+# Remove pk objects ---------------------------------------
 rm(pks, pk)

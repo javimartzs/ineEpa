@@ -10,12 +10,6 @@ files <- list(
         name = "poblacion_edad_sexo", 
         extra_transformations = list(
 
-            # Rename variables
-            function(df) dplyr::rename(df, 
-                edad = Edad, 
-                sexo = Sexo
-            ),
-
             # Calculate percentage by ccaa
             function(df) {
                 df |> 
@@ -23,7 +17,6 @@ files <- list(
                 dplyr::mutate(pct_by_ccaa = value / value[edad=="Total"]) |> 
                 dplyr::ungroup()
             }
-
         )
     ), 
     # Poblacion por nacionalidad, sexo y comunidad autonoma 
@@ -31,12 +24,6 @@ files <- list(
         file_ext = "65287", 
         name = "poblacion_nacionalidad_sexo", 
         extra_transformations = list(
-
-            # Rename variable
-            function(df) dplyr::rename(df, 
-                nacionalidad = Nacionalidad, 
-                sexo = Sexo
-            ), 
 
             # Calculate percentage by ccaa
             function(df) {
@@ -53,12 +40,6 @@ files <- list(
         name = "poblacion_adultos_formacion_sexo", 
         extra_transformations = list(
 
-            # Rename variables
-            function(df) dplyr::rename(df, 
-                nivel_formacion = Nivel.de.formación.alcanzado, 
-                sexo = Sexo
-            ), 
-
             # Calculate percentage by ccaa
             function(df) {
                 df |> 
@@ -73,12 +54,6 @@ files <- list(
         file_ext = "65293", 
         name = "activos_edad_sexo", 
         extra_transformations = list(
-
-            # Rename variables
-            function(df) dplyr::rename(df, 
-                edad = Edad, 
-                sexo = Sexo
-            ), 
 
             # Calculate percentage by ccaa
             function(df) {
@@ -95,12 +70,6 @@ files <- list(
         name = "activos_formacion_sexo", 
         extra_transformations = list(
 
-            # Rename variables 
-            function(df) dplyr::rename(df, 
-                nivel_formacion = Nivel.de.formación.alcanzado, 
-                sexo = Sexo    
-            ), 
-
             # Calculate percentage by ccaa
             function(df) {
                 df |> 
@@ -115,11 +84,6 @@ files <- list(
         file_ext = "65299", 
         name = "activos_nacionalidad_sexo", 
         extra_transformations = list(
-            # Rename variable
-            function(df) dplyr::rename(df, 
-                nacionalidad = Nacionalidad, 
-                sexo = Sexo
-            ), 
 
             # Calculate percentage by ccaa
             function(df) {

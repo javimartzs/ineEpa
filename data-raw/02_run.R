@@ -1,0 +1,5 @@
+source("data-raw/00_utils_data_raw.R")
+source("data-raw/01_prepare_activos.R")
+source("data-raw/01_prepare_ocupados.R")
+source("data-raw/01_prepare_parados.R")
+source("data-raw/01_prepare_inactivos.R")

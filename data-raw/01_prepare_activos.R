@@ -7,22 +7,23 @@ files <- list(
     # Población por edad, sexo y comunidad autonoma
     list(
         file_ext = "65285", 
-        name = "poblacion_edad_sexo", 
+        name = "poblacion_edad", 
         extra_transformations = list(
 
             # Calculate percentage by ccaa
             function(df) {
                 df |> 
-                dplyr::group_by(codauto, sexo, trimestre) |> 
-                dplyr::mutate(pct_by_ccaa = value / value[edad=="Total"]) |> 
-                dplyr::ungroup()
+                    dplyr::group_by(codauto, sexo, trimestre) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[edad=="Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
+                    dplyr::ungroup()
             }
         )
     ), 
     # Poblacion por nacionalidad, sexo y comunidad autonoma 
     list(
         file_ext = "65287", 
-        name = "poblacion_nacionalidad_sexo", 
+        name = "poblacion_nacionalidad", 
         extra_transformations = list(
 
             # Calculate percentage by ccaa
@@ -30,6 +31,7 @@ files <- list(
                 df |> 
                     dplyr::group_by(codauto, trimestre, sexo) |> 
                     dplyr::mutate(pct_by_ccaa = value / value[nacionalidad == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
                     dplyr::ungroup()
             }
         )
@@ -37,7 +39,7 @@ files <- list(
     # Poblacion mayor de 16 por formacion, sexo y comunidad autonoma
     list(
         file_ext = "65288", 
-        name = "poblacion_adultos_formacion_sexo", 
+        name = "poblacion_adultos_formacion", 
         extra_transformations = list(
 
             # Calculate percentage by ccaa
@@ -45,6 +47,7 @@ files <- list(
                 df |> 
                     dplyr::group_by(codauto, trimestre, sexo) |> 
                     dplyr::mutate(pct_by_ccaa = value / value[nivel_formacion == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
                     dplyr::ungroup()
             }
         )
@@ -52,7 +55,7 @@ files <- list(
     # Activos por sexo, edad y comunidad autonoma 
     list(
         file_ext = "65293", 
-        name = "activos_edad_sexo", 
+        name = "activos_edad", 
         extra_transformations = list(
 
             # Calculate percentage by ccaa
@@ -60,6 +63,7 @@ files <- list(
                 df |> 
                     dplyr::group_by(codauto, trimestre, sexo) |> 
                     dplyr::mutate(pct_by_ccaa = value / value[edad == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
                     dplyr::ungroup()
             }
         )
@@ -67,7 +71,7 @@ files <- list(
     # Activos por formacion, sexo y comunidad autonoma 
     list(
         file_ext = "65297", 
-        name = "activos_formacion_sexo", 
+        name = "activos_formacion", 
         extra_transformations = list(
 
             # Calculate percentage by ccaa
@@ -75,6 +79,7 @@ files <- list(
                 df |> 
                     dplyr::group_by(codauto, trimestre, sexo) |> 
                     dplyr::mutate(pct_by_ccaa = value / value[nivel_formacion == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
                     dplyr::ungroup()
             }
         )
@@ -82,7 +87,7 @@ files <- list(
     # Activos por nacionalidad, sexo y comunidad autonoma
     list(
         file_ext = "65299", 
-        name = "activos_nacionalidad_sexo", 
+        name = "activos_nacionalidad", 
         extra_transformations = list(
 
             # Calculate percentage by ccaa
@@ -90,6 +95,7 @@ files <- list(
                 df |> 
                     dplyr::group_by(codauto, trimestre, sexo) |> 
                     dplyr::mutate(pct_by_ccaa = value / value[nacionalidad == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
                     dplyr::ungroup()
             }
         )

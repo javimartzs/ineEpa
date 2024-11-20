@@ -8,7 +8,7 @@ files <- list(
     # Ocupados por sexo, edad y comunidad autonoma
     list(
         file_ext = "65302", 
-        name = "ocupados_edad_sexo", 
+        name = "ocupados_edad", 
         extra_transformations = list(
             function(df) {
                 df |> 
@@ -22,7 +22,7 @@ files <- list(
     # Ocupados por nivel de formacion, sexo y comunidad autonoma
     list(
         file_ext = "65307", 
-        name = "ocupados_formacion_sexo", 
+        name = "ocupados_formacion", 
         extra_transformations = list(
             function(df) {
                 df |>   
@@ -36,7 +36,7 @@ files <- list(
     # Ocupados por nacionaliadad, sexo y comunidad autonoma
     list(
         file_ext = "65309", 
-        name = "ocupados_nacionalidad_sexo", 
+        name = "ocupados_nacionalidad", 
         extra_transformations = list(
             function(df) {
                 df |>   
@@ -50,7 +50,7 @@ files <- list(
     # Ocupados por sector economico, sexo y comunidad autonoma
     list(
         file_ext = "65311", 
-        name = "ocupados_sector_sexo", 
+        name = "ocupados_sector", 
         extra_transformations = list(
             function(df) {
                 df |> 
@@ -64,7 +64,7 @@ files <- list(
     # Ocupados por rama de actividad, sexo y comunidad autonoma 
     list(
         file_ext = "65313", 
-        name = "ocupados_rama_sexo", 
+        name = "ocupados_rama", 
         extra_transformations = list(
             function(df) {
                 df |> 
@@ -78,7 +78,7 @@ files <- list(
     # Ocupados por ocupacion, sexo y comunidad autonoma 
     list(
         file_ext = "65314",
-        name = "ocupados_ocupacion_sexo", 
+        name = "ocupados_ocupacion", 
         extra_transformations = list(
             function(df) {
                 df |> 
@@ -95,7 +95,7 @@ files <- list(
     # Ocupados por situacion profesional, sexo y comunidad autonoma
     list(
         file_ext = "65316", 
-        name = "ocupados_situacion_sexo", 
+        name = "ocupados_situacion", 
         extra_transformations = list(
             function(df) {
                 df |> 
@@ -109,7 +109,7 @@ files <- list(
     #Ocupados por situacion profesional, sector economico, sexo y comunidad autonoma
     list(
         file_ext = "65318", 
-        name = "ocupados_situacion_sector_sexo", 
+        name = "ocupados_situacion_sector", 
         extra_transformations = list(
             
         )
@@ -117,7 +117,7 @@ files <- list(
     # Ocupados por tipo de jornada, sexo y comunidad autonoma
     list(
         file_ext = "65319", 
-        name = "ocupados_jornada_sexo", 
+        name = "ocupados_jornada", 
         extra_transformations = list(
             function(df) {
                 df |> 
@@ -129,63 +129,91 @@ files <- list(
     # Ocupados por tipo de sector (pub vs priv), sexo y comunidad autonoma
     list(
         file_ext = "65321", 
-        name = "ocupados_tipo_sexo", 
+        name = "ocupados_tipo", 
         extra_transformations = list(
             function(df) {
                 df |> 
-                dplyr::group_by(codauto, trimestre, sexo) |> 
-                dplyr::mutate(pct_by_ccaa = value / value[propiedad_sector == "Total"]) |> 
-                dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
-                dplyr::ungroup()
+                    dplyr::group_by(codauto, trimestre, sexo) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[propiedad_sector == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
+                    dplyr::ungroup()
             }
         )
     ), 
     # Asalariados por edad, sexo y comunidad autonoma
     list(
         file_ext = "65323", 
-        name = "Asalariados_edad_sexo", 
+        name = "asalariados_edad", 
         extra_transformations = list(
-            
+            function(df) {
+                df |> 
+                    dplyr::group_by(codauto, trimestre, sexo) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[edad == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
+                    dplyr::ungroup()
+            }
         )
     ), 
     # Asalariados por sector economico, sexo y comunidad autonoma
     list(
         file_ext = "65325", 
-        name = "asalariados_sector_sexo", 
+        name = "asalariados_sector", 
         extra_transformations = list(
-            
+            function(df) {
+                df |> 
+                    dplyr::group_by(codauto, trimestre, sexo) |> 
+                    dplyr::mutate(pct_by_ccaa = value / value[sector_economico == "Total"]) |> 
+                    dplyr::mutate(pct_by_ccaa = round(value * 100, 2)) |> 
+                    dplyr::ungroup()
+            }
         )
     ), 
     # Asalariados por tipo de sector (pub vs priv), sexo y comunidad autonoma
     list(
         file_ext = "65327", 
-        name = "asalariados_tipo_sexo", 
+        name = "asalariados_tipo", 
         extra_transformations = list(
-            
+            function(df) {
+                df |> 
+                    tidyr::pivot_wider(names_from = Unidad, values_from = value) |> 
+                    dplyr::rename(value = `Valor absoluto`, pct_by_ccaa = Porcentaje)
+            }
         )
     ), 
     # Asalariados por tipo de contrato, sexo y comunidad autonoma
     list(
         file_ext = "65328", 
-        name = "asalariados_contrato_sexo", 
+        name = "asalariados_contrato", 
         extra_transformations = list(
-            
+            function(df) {
+                df |> 
+                    tidyr::pivot_wider(names_from = Unidad, values_from = value) |> 
+                    dplyr::rename(value = `Valor absoluto`, pct_by_ccaa = Porcentaje)
+            } 
         )
     ), 
     # Asalariados privados por tipo de contrato, sexo y comunidad autonoma
     list(
         file_ext = "65329", 
-        name = "asalariados_priv_contrato_sexo", 
+        name = "asalariados_priv_contrato", 
         extra_transformations = list(
-            
+            function(df) {
+                df |> 
+                    tidyr::pivot_wider(names_from = Unidad, values_from = value) |> 
+                    dplyr::rename(value = `Valor absoluto`, pct_by_ccaa = Porcentaje)
+            }
         )
     ), 
     # Asalariados publicos por tipo de contrato, sexo y comunidad autonoma
     list(
         file_ext = "65330", 
-        name = "asalariados_pub_contrato_sexo", 
+        name = "asalariados_pub_contrato", 
         extra_transformations = list(
-            
+            function(df) {
+                df |> 
+                    tidyr::pivot_wider(names_from = Unidad, values_from = value) |> 
+                    dplyr::rename(value = `Valor absoluto`, pct_by_ccaa = Porcentaje)
+            }
         )
     )
 )
@@ -203,5 +231,3 @@ for (file in files) {
 
 # Clean Global Environment --------------------------------
 rm(list = ls())
-
-load("data/ocupados_tipo_sexo.rda")

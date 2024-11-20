@@ -86,7 +86,10 @@ common_transformations <- list(
             `Ocupación.CNO.11` = "ocupacion", 
             `Situación.profesional` = "situacion_profesional", 
             `Tipo.de.jornada` = "jornada", 
-            `Tipo.de.sector` = "propiedad_sector"
+            `Tipo.de.sector` = "propiedad_sector", 
+            `Tipo.de.contrato.o.relación.laboral` = "tipo_contrato", 
+            `Tiempo.de.búsqueda.de.empleo` = "tiempo_busqueda", 
+            `Clase.principal.de.la.inactividad` = "clase_inactividad"
         )
         for (col in names(renames)) {
             if (col %in% names(df)) {
